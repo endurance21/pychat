@@ -23,24 +23,20 @@ else
     echo -e "${YELLOW}Backend server not running${NC}"
 fi
 
-# Find and kill frontend processes (react-scripts)
-FRONTEND_PIDS=$(ps aux | grep "[r]eact-scripts start" | awk '{print $2}')
-if [ ! -z "$FRONTEND_PIDS" ]; then
-    echo -e "${GREEN}Stopping frontend server (PID: $FRONTEND_PIDS)...${NC}"
-    echo $FRONTEND_PIDS | xargs kill 2>/dev/null || true
+
+# Find and kill ngrok processes
+NGROK_PIDS=$(ps aux | grep "[n]grok" | grep -v grep | awk '{print $2}')
+if [ ! -z "$NGROK_PIDS" ]; then
+    echo -e "${GREEN}Stopping ngrok tunnels (PID: $NGROK_PIDS)...${NC}"
+    echo $NGROK_PIDS | xargs kill 2>/dev/null || true
     sleep 1
 else
-    echo -e "${YELLOW}Frontend server not running${NC}"
+    echo -e "${YELLOW}Ngrok not running${NC}"
 fi
 
-# Also check for node processes on ports 3000 and 8000
-PORT_3000_PID=$(lsof -ti:3000 2>/dev/null || true)
+
+# Also check for processes on port 8000
 PORT_8000_PID=$(lsof -ti:8000 2>/dev/null || true)
-
-if [ ! -z "$PORT_3000_PID" ]; then
-    echo -e "${GREEN}Killing process on port 3000 (PID: $PORT_3000_PID)...${NC}"
-    kill $PORT_3000_PID 2>/dev/null || true
-fi
 
 if [ ! -z "$PORT_8000_PID" ]; then
     echo -e "${GREEN}Killing process on port 8000 (PID: $PORT_8000_PID)...${NC}"
