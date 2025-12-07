@@ -2,6 +2,12 @@
 
 Group chat application with real-time WebSocket communication. Built with FastAPI (Python) and React.
 
+## Video Demo
+
+[![PyChat Demo](https://img.youtube.com/vi/mAheoMDW83A/maxresdefault.jpg)](https://www.youtube.com/watch?v=mAheoMDW83A)
+
+*Click the image above to watch the demo video*
+
 ## Requirements
 
 - Python 3.9+
